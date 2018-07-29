@@ -9,7 +9,7 @@ module.exports = function localStrategy() {
       usernameField: 'username',
       passwordField: 'password'
     }, (username, password, done) => {
-      const url = 'mondaydb://localhost:27017';
+      const url = 'mongodb://localhost:27017';
       const dbName = 'libraryApp';
       (async function mongo() {
         let client;
@@ -35,8 +35,6 @@ module.exports = function localStrategy() {
 
         client.close();
       }());
-
-      done(null, user);
     }
   ));
 };

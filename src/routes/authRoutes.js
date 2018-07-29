@@ -36,6 +36,13 @@ function router(nav) {
     });
 
   authRouter.route('/profile')
+    .all((req, res, next) => {
+      if (req.user) {
+        next();
+      } else {
+        res.redirect('/');
+      }
+    })
     .get((req, res) => {
       res.json(req.user);
     });
@@ -51,6 +58,14 @@ function router(nav) {
       successRedirect: '/auth/profile',
       failureRedirect: '/'
     }));
+
+  authRouter.route('/signout')
+    .get((req, res) => {
+      if (req.user) {
+        req.logout();
+        res.redirect('/');
+      }
+    });
 
   return authRouter;
 }
